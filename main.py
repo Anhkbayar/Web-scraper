@@ -7,12 +7,16 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 import time
+from openpyxl import load_workbook
 
 EMAIL = "ankhbayar@garage.mn"
 PASSWORD = "Ankhaa#123"
 
 #unshih
 df = pd.read_excel("TestArticle.xlsx")
+wb = load_workbook("TestArticle.xlsx")
+
+ws = wb.create_sheet("Fitment data")
 
 #setup
 options = webdriver.ChromeOptions()
@@ -47,11 +51,36 @@ for index, row in df.iterrows():
     
     #OEM huulah
     try:
-        h5_element = WebDriverWait(driver, 10).until(
+        h5_element = WebDriverWait(driver, 5).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, "h5.text-truncate.font-size-14"))
         )
 
         part_number = h5_element.text.strip()
         print("Huulsan oem:", part_number)
+        
+        driver.get("https://www.toyodiy.com/parts/xref?s="+part_number+"&mU=on&mE=on&mJ=on&mG=on")
+        fitment_table = WebDriverWait(driver, 4).until(
+        EC.element_to_be_clickable((By.XPATH, "//a[@title='click to reveal details']"))
+        )
+        fitment_table.click()
+        
+        WebDriverWait(driver, 10).until(
+        lambda d: "Loading" not in d.find_element(By.CSS_SELECTOR, "tbody#res3311D0").text
+        )
+        
+        table = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, "tbody#res3311D0"))
+        )
+        rows = table.find_elements(By.TAG_NAME, "tr")
+            
+        #data nemeh
+        for row in rows:
+            cols = row.find_elements(By.TAG_NAME, "td")
+            row_data = [col.text.strip() for col in cols[1:]]
+            ws.append(row_data)
     except Exception as e:
         print("Aldaatai articleId", str(row))
+        
+wb.save("TestArticle.xlsx")
+driver.quit()
+print("Amjilttai")
