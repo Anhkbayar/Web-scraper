@@ -8,15 +8,19 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 import time
 from openpyxl import load_workbook
+from openpyxl.styles import PatternFill
 
 EMAIL = "ankhbayar@garage.mn"
 PASSWORD = "Ankhaa#123"
+RED_FILL = PatternFill(start_color='FF0000', end_color='FF0000', fill_type='solid')
+
 
 #unshih
 df = pd.read_excel("TestArticle.xlsx")
 wb = load_workbook("TestArticle.xlsx")
 
-ws = wb.create_sheet("Fitment data")
+id_sheet = wb.worksheets[0]
+fitment_sheet = wb["Fitment Data"] if "Fitment Data" in wb.sheetnames else wb.create_sheet("Fitment Data")
 
 #setup
 options = webdriver.ChromeOptions()
@@ -76,9 +80,11 @@ for index, row in df.iterrows():
         #data nemeh
         for row in rows:
             cols = row.find_elements(By.TAG_NAME, "td")
-            row_data = [col.text.strip() for col in cols[1:]]
-            ws.append(row_data)
+            row_data = [str(article_id)]
+            row_data.extend(col.text.strip() for col in cols[1:])
+            fitment_sheet.append(row_data)
     except Exception as e:
+        id_sheet.cell(row = index+2, column = 1).fill = RED_FILL
         print("Aldaatai articleId", str(row))
         
 wb.save("TestArticle.xlsx")
