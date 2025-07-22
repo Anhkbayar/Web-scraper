@@ -11,7 +11,7 @@ from openpyxl import load_workbook
 import random
 FILEPATH = "split_2"
 
-df = pd.read_excel(FILEPATH+".xlsx")
+df = pd.read_excel(FILEPATH+".xlsx", header=None)
 wb = load_workbook(FILEPATH+".xlsx")
 ws = wb.active
 
@@ -28,7 +28,7 @@ for index, row in df.iterrows():
     if not ws.cell(row=index + 1, column=2).value:
         start_time = time.time()
         driver.get("https://www.toyodiy.com/parts/q?vin="+str(VIN))
-        time.sleep(0.7)
+        time.sleep(0.5)
         try:
             production_date = driver.find_element(By.XPATH, '//a[@title="production date"]').text.strip()
             row_xpath = '//table[@class="res"]/tbody/tr[2]' 
