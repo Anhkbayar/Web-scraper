@@ -17,9 +17,9 @@ ws = wb.active
 
 #setup
 options = webdriver.ChromeOptions()
-#udaan bololtoi
+#Yu bolj baigaag harmaar sanagdval eniig comment bish bolgooroi XD
 # options.add_argument('start-maximized')
-#hurdan bololtoi
+#Eniig orond ni comment bolgonoo XD
 options.add_argument('--headless')
 options.add_argument('--disable-gpu')
 service = Service(ChromeDriverManager().install())
