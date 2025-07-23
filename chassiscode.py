@@ -8,7 +8,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 import time
 from openpyxl import load_workbook
-import random
+
 FILEPATH = "split_3"
 
 df = pd.read_excel(FILEPATH+".xlsx", header=None)
@@ -65,6 +65,5 @@ for index, row in df.iterrows():
         print(f"Row {index} processed")
         continue
     
-wb.save(FILEPATH+".xlsx")
 driver.quit()
 print("Amjilttai")
