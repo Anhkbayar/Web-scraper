@@ -9,7 +9,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 import time
 from openpyxl import load_workbook
 import random
-FILEPATH = "split_2"
+FILEPATH = "split_3"
 
 df = pd.read_excel(FILEPATH+".xlsx", header=None)
 wb = load_workbook(FILEPATH+".xlsx")
@@ -17,11 +17,17 @@ ws = wb.active
 
 #setup
 options = webdriver.ChromeOptions()
-options.add_argument('start-maximized')
+#udaan bololtoi
+# options.add_argument('start-maximized')
+#hurdan bololtoi
+options.add_argument('--headless')
+options.add_argument('--disable-gpu')
 service = Service(ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service, options=options)
 
 #logic
+save_interval = 50
+
 for index, row in df.iterrows():
     VIN = row.iloc[0]
     print(VIN)
@@ -48,14 +54,17 @@ for index, row in df.iterrows():
             print("Aldaa")
             ws.cell(row = index + 1, column = 2, value = "Not found")
             
-        wb.save(FILEPATH+".xlsx")
+        if index % save_interval == 0:
+            wb.save(FILEPATH+".xlsx")
+            
         end_time = time.time()
         hugatsaa = end_time - start_time
-        print(f"hugatsaa {hugatsaa}")
+        print(f"hugatsaa {hugatsaa:.3f}")
         print(f"Row: {index}")
     else:
         print(f"Row {index} processed")
         continue
+    
 wb.save(FILEPATH+".xlsx")
 driver.quit()
 print("Amjilttai")
