@@ -10,10 +10,6 @@ import time
 from openpyxl import load_workbook
 import os
 
-FILEPATH = "split_8"
-
-
-
 #setup
 options = webdriver.ChromeOptions()
 #Yu bolj baigaag harmaar sanagdval eniig comment bish bolgooroi XD
