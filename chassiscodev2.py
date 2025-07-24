@@ -81,7 +81,7 @@ try:
                 print(f"Row {index} processed")
                 continue
         
-        wb.save(FILEPATH+".xlsx")
+        wb.save(FILEPATH)
         
         file_num +=1
 
