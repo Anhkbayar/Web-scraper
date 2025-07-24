@@ -9,7 +9,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 import time
 from openpyxl import load_workbook
 
-FILEPATH = "split_4"
+FILEPATH = "split_8"
 
 df = pd.read_excel(FILEPATH+".xlsx", header=None)
 wb = load_workbook(FILEPATH+".xlsx")
