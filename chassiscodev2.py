@@ -67,7 +67,7 @@ try:
                     ws.cell(row = index + 1, column = 2, value = "Not found")
                     
                 if index % save_interval == 0:
-                    wb.save(FILEPATH+".xlsx")
+                    wb.save(FILEPATH)
                     
                 end_time = time.time()
                 hugatsaa = end_time - start_time
