@@ -41,7 +41,8 @@ def process_vin(driver, vin):
         
         return model_code, from_date, to_date, production_date
     except Exception as e:
-        print(f"Error processing VIN {vin}: {str(e)}")
+        print(f"VIN {vin}: {str(e)}")
+        print("ERONHII OLDOOGUIDE XD")
         raise
 
 def main():
@@ -57,7 +58,7 @@ def main():
                 file_num += 1
                 continue
             
-            print(f"\nProcessing {FILEPATH}")
+            print(f"\n{FILEPATH} EHELLEEEE YEYYEE")
             
             df = pd.read_excel(FILEPATH, header=None)
             wb = load_workbook(FILEPATH)
@@ -82,7 +83,7 @@ def main():
                         ws.cell(row=index + 1, column=5, value=production_date)
                         
                         processing_time = time.time() - start_time
-                        print(f"Processed VIN {VIN} in {processing_time:.2f}s")
+                        print(f"VIN {VIN} in {processing_time:.2f}s")
                         
                         # hadgalah
                         if index % save_interval == 0:
