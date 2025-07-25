@@ -31,7 +31,7 @@ def setup_driver():
 def process_vin(driver, vin):
     try:
         driver.get(f"https://www.toyodiy.com/parts/q?vin={str(vin)}")
-        time.sleep(0.5)  # Slightly increased delay
+        time.sleep(0.3)
         
         production_date = driver.find_element(By.XPATH, '//a[@title="production date"]').text.strip()
         row_xpath = '//table[@class="res"]/tbody/tr[2]'
@@ -102,7 +102,7 @@ def main():
                             
                     except WebDriverException as e:
                         retry_count += 1
-                        print(f"WebDriver error: {str(e)} - restarting (attempt {retry_count}/{max_retries})")
+                        print(f"WebDriver error: {str(e)} (attempt {retry_count}/{max_retries})")
                         if retry_count >= max_retries:
                             ws.cell(row=index + 1, column=2, value="Driver error")
                         else:
@@ -112,16 +112,16 @@ def main():
                             
                     except Exception as e:
                         ws.cell(row=index + 1, column=2, value=f"Error: {str(e)}")
-                        break  # Non-retryable error
+                        break
             
-            # Final save for the file
+            # Neg file duusaad hadgalah
             wb.save(FILEPATH)
-            print(f"Finished processing {FILEPATH}")
+            print(f"{FILEPATH} DUUUSLAAA YEYEYEYAYAYAYE :)))))")
             file_num += 1
             
     finally:
         driver.quit()
-        print("Processing completed")
+        print("DUUUSLAA UEUEUEUEEUEU")
 
 if __name__ == "__main__":
     main()
