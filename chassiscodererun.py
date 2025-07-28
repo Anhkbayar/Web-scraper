@@ -10,8 +10,8 @@ from selenium.common.exceptions import TimeoutException, WebDriverException
 
 # Setup
 save_interval = 50
-start_num = 17
-end_num = 22
+start_num = 1
+end_num = 1
 max_retries = 3
 timeout_delay = 1
 page_load_timeout = 120
@@ -66,7 +66,7 @@ def main():
 
             for index, row in df.iterrows():
                 VIN = row.iloc[0]
-                if ws.cell(row=index + 1, column=2).value:
+                if ws.cell(row=index + 1, column=5).value or ws.cell(row=index + 1, column=2).value=='Not found':
                     print(f"Row {index} processed")
                     continue
                 
