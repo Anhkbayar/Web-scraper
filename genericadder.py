@@ -42,7 +42,7 @@ loginbttn.click()
 driver.find_element(By.ID, "email").send_keys(EMAIL)
 driver.find_element(By.ID, "password").send_keys(PASSWORD, Keys.RETURN)
 
-for index, row in df.iterrows():
+for index, row in df.iloc[339:].iterrows():
     if ws.cell(row = index+1, column=11).value:
         article_id = row.iloc[7]
         Generic_ID = int(row.iloc[10])
@@ -53,21 +53,27 @@ for index, row in df.iterrows():
         driver.get("https://gp.garage.mn/parts")
         
         driver.find_element(By.ID, "articleno").send_keys(str(article_id), Keys.RETURN)
-        time.sleep(1)
+        time.sleep(2)
         
-        first_p = driver.find_element(By.XPATH, "/html/body/div/div[2]/div/div/div[3]/div/div/div/div[6]/div[1]/table/tbody/tr/td[3]/p[1]")
+        first_p = driver.find_element(By.XPATH, '/html/body/div/div[2]/div/div/div[3]/div/div/div/div[6]/div[1]/table/tbody/tr/td[3]/p[1]')
         id = first_p.text
 
         driver.get(f"https://gp.garage.mn/parts/{str(id)}/edit")
         
-        link = WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.ID, "select2-genericarticle-container"))
+        # link = WebDriverWait(driver, 15).until(
+        # EC.element_to_be_clickable((By.ID, "select2-genericarticle-container"))
+        # )
+        # link.click()
+        WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.ID, "select2-genericarticle-container")))
+        link = WebDriverWait(driver, 15).until(
+            EC.element_to_be_clickable((By.ID, "select2-genericarticle-container"))
         )
         link.click()
+
         
         generic_item = driver.find_element(By.XPATH, "/html/body/span/span/span[1]/input")
         generic_item.send_keys(str(Generic_ID))
-        time.sleep(1)
+        time.sleep(1.5)
         generic_item.send_keys(Keys.ENTER)
 
         
